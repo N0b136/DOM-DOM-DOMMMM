@@ -1,7 +1,6 @@
 body {
-    width: 100%;
-    height: 100%;
     display: flex;
+    flex-flow: row wrap;
 }
 .blackbox {
     height: 50px;
@@ -12,8 +11,11 @@ body {
     color: black;
     font-family: sans-serif;
     font-weight: bolder;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
 }
 
-.blackbox :hover {
+.blackbox:hover {
     color: white;
 }
