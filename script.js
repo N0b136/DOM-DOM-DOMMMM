@@ -4,19 +4,22 @@ document.addEventListener('DOMContentLoaded', function () {
     btn.appendChild(btnLabel);
     document.body.appendChild(btn);
 
-    let divI = 0;
+    let ctner = document.createElement('div');
+    ctner.id = 'container';
+    document.body.appendChild(ctner);
+
+    
     //add black square divs
     btn.addEventListener('click', function() {
         let div = document.createElement('div');
         div.className = "blackbox";
+        let divI = document.getElementsByClassName('blackbox').length;
         div.id = divI
         let idText = document.createTextNode(divI);
         div.appendChild(idText);
-        document.body.appendChild(div);
-        if (divI >= 0) {
-            divI++
-        };
+        ctner.appendChild(div);
 
+        //change box colors
         let colors = ['blue','red','orange','green','purple','tan','indigo','crimson'];
         div.addEventListener('click', function(){
             let randColor = colors[Math.floor(Math.random()*colors.length)];
@@ -28,19 +31,26 @@ document.addEventListener('DOMContentLoaded', function () {
             div.addEventListener('mouseout', function() {
                 div.style.color = randColor;
             });
-            div.addEventListener('dblclick', function(){
-                if (divI%2 == 0) {
-                    let nextSib = div.nextSibling;
-                    if (nextSib == null) { alert ("There is no box after that one...")} else {
-                    document.body.removeChild(nextSib);}
-                    
-                } else {
-                    let prevSib = div.previousSibling;
-                    if (prevSib == null) {alert('There is no previous box...')} else {
-                    document.body.removeChild(prevSib);}
-                    
-                }
-            })
+        
+            //delete boxes
+            function remoxeBoxes(e) {
+                let cTarget = e.target;
+                let nextSib = e.target.nextSibling;
+                let prevSib = e.target.previousSibling;
+                let firstBox = ctner.firstChild;
+                let lastBox = ctner.lastChild;
+                firstBox.addEventListener('dblclick', function (){
+                    alert('There is no previous box...');
+                });
+                lastBox.addEventListener('dblckick', function() {
+                    alert ("There is no box after that one...");
+                });
+
+                if (divI%2 == 0 && cTarget !== lastBox) { ctner.removeChild(nextSib);}
+                else if (divI%2 !== 0 && cTarget !== firstBox) { ctner.removeChild(prevSib);};
+            }
+
+            div.addEventListener('dblclick', remoxeBoxes, false);
         });
     });
 });
